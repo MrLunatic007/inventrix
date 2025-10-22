@@ -1,0 +1,162 @@
+Here is the updated `README.md` with the file structure appended.
+
+-----
+
+# Inventrix 💡
+
+**Intelligent Project Scaffolding & Compilation**
+
+Inventrix is a command-line tool designed to supercharge your Python development workflow. It combines two powerful features into one seamless interface:
+
+1.  **Project Scaffolding:** Instantly create new, well-structured Python projects from a variety of templates (like Django, Flask, ML, etc.).
+2.  **Project Compilation (ComPy):** Compile your finished Python applications into standalone executables using a simple configuration file.
+
+Go from a new idea to a shareable application without ever leaving your terminal.
+
+> "Build once, invent forever."
+
+-----
+
+## Core Features
+
+  * **⚡ Instant Scaffolding:** Generate project skeletons for web, machine learning, automation, and more with the `init` command.
+  * **📦 Executable Bundling:** Powered by **ComPy**, Inventrix uses PyInstaller to bundle your app into a single executable or a directory.
+  * **📋 Simple Configuration:** Manage your builds with a clean `compy.json` file. No more complex PyInstaller commands.
+  * **📜 Template Library:** Choose from a list of pre-configured templates, including:
+      * `web-django`
+      * `web-flask`
+      * `web-streamlit`
+      * `ml-tensorflow`
+      * `ml-torch`
+      * `simulation`
+      * `automation`
+      * `vanilla`
+  * **🔄 Integrated Workflow:** Use `inventrix init` to start, `inventrix build` to compile, and `inventrix run` to test your executable.
+
+-----
+
+## Quick Start / Usage
+
+Inventrix has two primary workflows: scaffolding a new project and compiling an existing one.
+
+### Workflow 1: Scaffolding a New Project
+
+1.  **List available templates:**
+
+    ```bash
+    inventrix list
+    ```
+
+2.  **Create your new project:**
+    Pass the project name and an optional template flag (`-t`).
+
+    ```bash
+    inventrix init my_flask_app -t web-flask
+    ```
+
+3.  **Follow the project's setup instructions:**
+    A unique `README.md` and `requirements.txt` will be generated inside your new project folder.
+
+    ```bash
+    cd my_flask_app
+    # Follow the steps in your new README.md
+    # (e.g., source venv/bin/activate, pip install -r requirements.txt)
+    ```
+
+### Workflow 2: Compiling an Existing Project
+
+Once you've built your application (or if you have any existing Python project), you can compile it.
+
+1.  **Navigate to your project's root directory:**
+
+    ```bash
+    cd my_flask_app
+    ```
+
+2.  **Initialize the ComPy build system:**
+    This creates the `compy.json` configuration file.
+
+    ```bash
+    inventrix compy-init
+    ```
+
+3.  **Edit `compy.json`:**
+    Open the newly created `compy.json` and tell ComPy about your project. The most important field is `"entry"`, which should point to your main script (e.g., `app.py` for Flask).
+
+    ```json
+    {
+      "name": "my_flask_app",
+      "entry": "app.py",
+      "onefile": true,
+      "console": true,
+      "data_files": [
+        "templates",
+        "static"
+      ]
+    }
+    ```
+
+4.  **Build your executable:**
+    Inventrix will read `compy.json` and run PyInstaller with the correct settings.
+
+    ```bash
+    inventrix build
+    ```
+
+5.  **Run or clean up:**
+
+      * Test your new executable: `inventrix run`
+      * Remove build artifacts (`build/`, `dist/`, `*.spec`): `inventrix clean`
+
+-----
+
+## All Commands
+
+### Project Scaffolding
+
+| Command | Description |
+| :--- | :--- |
+| `inventrix init <name>` | Initializes a new project from a template. |
+| `inventrix list` | Lists all available project templates. |
+
+### Project Compilation (ComPy)
+
+| Command | Description |
+| :--- | :--- |
+| `inventrix compy-init` | Creates a `compy.json` build file in the current directory. |
+| `inventrix build` | Builds the executable based on `compy.json` settings. |
+| `inventrix run` | Builds and then immediately runs the executable. |
+| `inventrix clean` | Removes all build artifacts (e.g., `build/`, `dist/`, `.spec` files). |
+| `inventrix config` | Displays the current `compy.json` configuration. |
+
+-----
+
+## Project Structure
+
+This is the internal file structure of the Inventrix tool itself.
+
+```
+.
+├── core
+│   ├── creation.py             # Logic for scaffolding project files
+│   ├── file_processor.py       # Contains all file content/templates
+│   ├── __init__.py
+│   ├── project_management.py   # Logic for ComPy compiler interface
+│   └── __pycache__
+│       ├── creation.cpython-313.pyc
+│       ├── file_processor.cpython-313.pyc
+│       ├── __init__.cpython-313.pyc
+│       └── project_management.cpython-313.pyc
+├── docs
+│   ├── Dev.md
+│   ├── index.html
+│   ├── main.html
+│   └── search.js
+├── main.py                     # Main CLI entry point
+├── __pycache__
+│   └── main.cpython-313.pyc
+├── pydoc-markdown.yml
+├── README.md                   # This file
+├── requirements.txt
+└── tests
+```

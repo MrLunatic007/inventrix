@@ -1,0 +1,50 @@
+# pydoc-markdown.yml
+# Auto-generates a unified Markdown README from all module docstrings in Inventrix
+
+loaders:
+  - type: python
+    search_path: ["."]
+    packages:
+      - core
+    modules:
+      - main
+
+processors:
+  - type: filter
+    skip_empty_modules: true
+    skip_private: true
+  - type: smart
+
+renderers:
+  - type: markdown
+    filename: README.md
+    render_toc: true
+    header_level_by_depth: true
+    insert_header_anchors: true
+    content:
+      - |
+        # Inventrix Documentation
+
+        **Inventrix** is a modular AI system for data-driven automation and project management.  
+        This documentation is **auto-generated from Python docstrings** using `pydoc-markdown`.
+
+        ## 🧭 Overview
+        Inventrix consists of several core modules responsible for:
+        - **Core utilities** for file handling and project management
+        - **Automation tools** for project creation and orchestration
+        - **Modeling & data preparation** (in future modules)
+
+        ## 📦 Project Structure
+        ```
+        inventrix/
+        ├── main.py
+        ├── core/
+        │   ├── creation.py
+        │   ├── file_processor.py
+        │   ├── project_management.py
+        │   └── __init__.py
+        └── tests/
+        ```
+
+        ## 📘 API Reference
+        Below is the full API reference extracted from all modules:
